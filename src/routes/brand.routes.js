@@ -1,26 +1,17 @@
 const express = require("express");
 const router = express.Router();
+
 const controller = require("./../controllers/brand.controller");
 
-// upload file
-const multer = require("multer");
-const storage = multer.diskStorage({
-    destination: (req,file,callback)=>{
-        if(file)
-            callback(null,"public/uploads/brand");
-    },
-    filename: (req,file,callback)=>{
-        if(file)
-            callback(null,Date.now()+"-"+file.originalname);
-    }
-});
-const upload = multer({storage:storage});
 
-router.get("/",controller.list);
-router.get("/create",controller.formCreate);
-router.post("/create",upload.single("thumbnail"),controller.store);
-router.get("/edit/:id",controller.formEdit);
-router.post("/edit/:id",upload.single("thumbnail"),controller.update);
-router.get("/delete/:id",controller.delete);
+router.get("/brands", controller.brands);
+
+router.get("/createBrand", controller.createBrand);
+router.post("/createBrand", controller.postCreateBrand);
+
+router.get("/editBrand/:id", controller.editBrand);
+router.post("/editBrand/:id", controller.postEditBrand);
+
+router.get("/deleteBrand/:id", controller.deleteBrand);
 
 module.exports = router;

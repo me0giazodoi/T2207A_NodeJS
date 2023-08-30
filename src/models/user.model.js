@@ -1,40 +1,29 @@
 const mongoose = require("mongoose");
-const user_schema = new mongoose.Schema({
+const user_schema = new mongoose.Schema({// mongodb tu dong them id
     // _id
-    fullname: {
-        type:String,
-        required:[true,'Trường này bắt buộc phải nhập'],
-        minLength:[10,"Độ dài tối thiểu 10"]
+
+    username: {
+        type: String,
+        required: [true, 'Truong nay bat buoc phai nhap'],
+        minLength: [10, 'Do dai toi thieu 10'],
     },
-    email:{
-        type:String,
-        required:true,
-        minLength:10,
-        unique:true,
+    email: {
+        type: String,
+        required: true,
+        minLength: 10,
+        unique: true,
         validate: {
-            validator: (v)=>{
+            validator: (v) => {
                 const re =
                     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                     return v.match(re);
             },
-            message: (t)=>`${t.value} không phải định dạng email`
+            message: (t)=>`${t.value} khong phai dinh dang email`
         }
     },
-    password:{
-        type:String,
-        required:true
-    },
-    role: {
-        type:String,
-        required:true,
-        validate: {
-            validator: (v)=>{
-                if(v== "admin" || v== "user")
-                    return true;
-                return false;
-            },
-            message: t => `Role người dùng khôngg hợp lệ`
-        }
+    password: {
+        type: String,
+        required: true,
     }
 });
-module.exports = mongoose.model("User",user_schema);
+module.exports = mongoose.model("User", user_schema);

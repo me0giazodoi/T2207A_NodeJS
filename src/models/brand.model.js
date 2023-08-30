@@ -1,22 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const brand_schema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-        minLength:10,
-        maxLength:255
+    name: {
+        type: String,
+        required: [true, 'Truong nay bat buoc phai nhap'],
+        unique: true,
     },
-    price:{
-        type:Number,
-        min:0,
-        required:true
-    },
-    description:String,
-    thumbnail:{
-        data:String,
-        contentType:String
-    }, 
-    product:[{type: mongoose.Schema.Types.ObjectId,ref:'Product'}]
+    description: String,
+    products: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }]
 });
-
-module.exports = mongoose.model("Brand",brand_schema);
+module.exports = mongoose.model('Brand', brand_schema);

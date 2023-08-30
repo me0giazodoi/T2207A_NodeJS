@@ -1,33 +1,31 @@
 const express = require("express");
 const router = express.Router();
+
 const controller = require("./../controllers/product.controller");
-// ai cung vao dc trang danh sach- xem
-// them moi - update - xoa thi chi admin
-const middleware = require("./../middlewares/role.middleware");
-router.use("/create",middleware.role_admin);
-router.use("/edit/:id",middleware.role_admin);
-router.use("/delete",middleware.role_admin);
 
-
-// upload file
+// Start uploads file
 const multer = require("multer");
 const storage = multer.diskStorage({
-    destination: (req,file,callback)=>{
+    destination: (req, file, callback) => {
         if(file)
             callback(null,"public/uploads");
     },
-    filename: (req,file,callback)=>{
+    filename: (req, file, callback) => {
         if(file)
             callback(null,Date.now()+"-"+file.originalname);
     }
-});
-const upload = multer({storage:storage});
+})
+const upload = multer({ storage: storage });
+// End uploads file
 
-router.get("/",controller.list);
-router.get("/create",controller.formCreate);
-router.post("/create",upload.single("thumbnail"),controller.store);
-router.get("/edit/:id",controller.formEdit);
-router.post("/edit/:id",upload.single("thumbnail"),controller.update);
-router.get("/delete/:id",controller.delete);
+router.get("/products", controller.products);
+
+router.get("/createProduct", controller.createProduct);
+router.post("/createProduct", upload.single("image"), controller.postCreateProduct);
+
+router.get("/editProduct/:id", controller.editProduct);
+router.post("/editProduct/:id", upload.single("image"), controller.postEditProduct);
+
+router.get("/deleteProduct/:id", controller.deleteProduct);
 
 module.exports = router;
