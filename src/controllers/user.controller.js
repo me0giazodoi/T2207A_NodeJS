@@ -1,5 +1,5 @@
 const User = require("./../models/user.model");
-const bcrypt = require("bcrypt  js");
+// const bcrypt = require("brcyptjs");
 exports.login = (req, res) => {
     // res.send("About T2207A")
     res.render("login");
