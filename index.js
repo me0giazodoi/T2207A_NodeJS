@@ -33,3 +33,6 @@ app.use("/category", categoryrouter);
 
 const brandrouter = require("./src/routes/category.routes");
 app.use("/brand", brandrouter);
+
+const productcompanyrouter = require("./src/routes/productcompany.routes");
+app.use("/productcompany",productcompanyrouter);
