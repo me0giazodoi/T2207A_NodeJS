@@ -1,11 +1,11 @@
-exports.role_admin = (req,res,next)=>{
-    const auth = req.session.auth;
-    if(auth){
-        const role = auth.role;
-        if(role == 'admin'){
-            next();
-            return;
-        }
-    }
-    res.status(404).send("404 Not found");
-};
+const mongoose = require("mongoose");
+const category_schema = new mongoose.Schema({
+    name: {
+        type:String,
+        required:true,
+        unique: true
+    },
+    products:[{type:mongoose.Schema.Types.ObjectId,ref:'Product'}]
+})
+
+module.exports = mongoose.model("Category",category_schema);

@@ -1,12 +1,18 @@
-const nodemailer = require("nodemailer");
-const config = {
-    service: "Gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    auth: {
-        user: "hoatq4@fpt.edu.vn",
-        pass:"gnyaaqjofsdnbbcx"
+const server = "mongodb://127.0.0.1:27017"
+const db_name = "t2207a";
+const mongoose = require("mongoose");
+class Database{
+    constructor(){
+        this._connect();
+    }
+    _connect(){
+        mongoose.connect(`${server}/${db_name}`)
+        .then(()=>{
+            console.log(`Connected database ${db_name}`);
+        })
+        .catch(err=>{
+            console.log(err); 
+        });
     }
 }
-const transport = nodemailer.createTransport(config);
-module.exports = transport;
+module.exports = new Database();
